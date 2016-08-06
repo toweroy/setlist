@@ -123,7 +123,7 @@ public class ArtistSetsTest {
     public void getArtistSetFromJson() {
         Type artistSetListType = new TypeToken<List<ArtistSet>>() {}.getType();
         Gson gson = new GsonBuilder()
-                .registerTypeAdapter(artistSetListType, new ArtistSets.ArtistSetTypeAdapter())
+                .registerTypeAdapter(artistSetListType, new ArtistSet.ArtistSetTypeAdapter())
                 .create();
         ArtistSets artistSets = gson.fromJson(ARTIST_SET_JSON, ArtistSets.class);
         assertEquals(1, artistSets.getSets().size());
@@ -136,7 +136,7 @@ public class ArtistSetsTest {
     public void getArtistMultipleSetsFromJson() {
         Type artistSetListType = new TypeToken<List<ArtistSet>>() {}.getType();
         Gson gson = new GsonBuilder()
-                .registerTypeAdapter(artistSetListType, new ArtistSets.ArtistSetTypeAdapter())
+                .registerTypeAdapter(artistSetListType, new ArtistSet.ArtistSetTypeAdapter())
                 .create();
         ArtistSets artistSets = gson.fromJson(ARTIST_SETS_JSON, ArtistSets.class);
         assertEquals(2, artistSets.getSets().size());

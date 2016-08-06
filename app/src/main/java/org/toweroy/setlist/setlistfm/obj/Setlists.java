@@ -129,9 +129,13 @@ public class Setlists {
     }
 
     public static Setlists toSetlists(String data) {
+        Type setlistType = new TypeToken<List<Setlist>>() {}.getType();
         Type artistSetListType = new TypeToken<List<ArtistSet>>() {}.getType();
+        Type artistSetListsType = new TypeToken<List<ArtistSets>>() {}.getType();
         Gson gson = new GsonBuilder()
-                .registerTypeAdapter(artistSetListType, new ArtistSets.ArtistSetTypeAdapter())
+                .registerTypeAdapter(setlistType, new Setlist.SetlistTypeAdapter())
+                .registerTypeAdapter(artistSetListType, new ArtistSet.ArtistSetTypeAdapter())
+                .registerTypeAdapter(artistSetListsType, new ArtistSets.ArtistSetsTypeAdapter())
                 .create();
         return gson.fromJson(data, Setlists.class);
     }

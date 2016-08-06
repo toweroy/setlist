@@ -198,7 +198,7 @@ public class SetlistsTest {
     public void getSetlistsFromJson() {
         Type artistSetListType = new TypeToken<List<ArtistSet>>() {}.getType();
         Gson gson = new GsonBuilder()
-                .registerTypeAdapter(artistSetListType, new ArtistSets.ArtistSetTypeAdapter())
+                .registerTypeAdapter(artistSetListType, new ArtistSet.ArtistSetTypeAdapter())
                 .create();
         Setlists setlists = gson.fromJson(SETLISTS_JSON, Setlists.class);
         assertEquals(20, setlists.getItemsPerPage());

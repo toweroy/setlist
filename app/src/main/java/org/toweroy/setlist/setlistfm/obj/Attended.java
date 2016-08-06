@@ -2,11 +2,15 @@ package org.toweroy.setlist.setlistfm.obj;
 
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
+import com.google.gson.JsonDeserializationContext;
+import com.google.gson.JsonDeserializer;
+import com.google.gson.JsonElement;
 import com.google.gson.reflect.TypeToken;
 
 import java.lang.reflect.ParameterizedType;
 import java.lang.reflect.Type;
 import java.lang.reflect.WildcardType;
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -81,11 +85,15 @@ public class Attended {
     }
 
     public static Attended toAttended(String data) {
-        Type setlistsListType = new TypeToken<List<Setlists>>() {}.getType();
         Type artistSetListType = new TypeToken<List<ArtistSet>>() {}.getType();
+        Type artistSetListsType = new TypeToken<List<ArtistSets>>() {}.getType();
+        Type setlistType = new TypeToken<List<Setlist>>() {}.getType();
+        Type setlistsType = new TypeToken<List<Setlists>>() {}.getType();
         Gson gson = new GsonBuilder()
-                .registerTypeAdapter(setlistsListType, new Setlists.SetlistsTypeAdapter())
-                .registerTypeAdapter(artistSetListType, new ArtistSets.ArtistSetTypeAdapter())
+                .registerTypeAdapter(artistSetListType, new ArtistSet.ArtistSetTypeAdapter())
+                .registerTypeAdapter(artistSetListsType, new ArtistSets.ArtistSetsTypeAdapter())
+                .registerTypeAdapter(setlistType, new Setlist.SetlistTypeAdapter())
+                .registerTypeAdapter(setlistsType, new Setlists.SetlistsTypeAdapter())
                 .create();
         return gson.fromJson(data, Attended.class);
     }

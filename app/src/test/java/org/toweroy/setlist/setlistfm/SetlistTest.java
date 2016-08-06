@@ -99,14 +99,14 @@ public class SetlistTest {
     public void getSetlistFromJson() {
         Type artistSetListType = new TypeToken<List<ArtistSet>>() {}.getType();
         Gson gson = new GsonBuilder()
-                .registerTypeAdapter(artistSetListType, new ArtistSets.ArtistSetTypeAdapter())
+                .registerTypeAdapter(artistSetListType, new ArtistSet.ArtistSetTypeAdapter())
                 .create();
         Setlist setlist = gson.fromJson(SETLIST_JSON, Setlist.class);
         assertEquals("53ff2bcd", setlist.getId());
         assertEquals("2016-07-22T13:08:27.000+0000", setlist.getLastUpdated());
-        assertEquals(1, setlist.getSets().getSets().size());
-        assertEquals("Redneck Stomp", setlist.getSets().getSets().get(0).getSongs().get(0).getName());
-        assertEquals("Centuries of Lies", setlist.getSets().getSets().get(0).getSongs().get(1).getName());
-        assertEquals("Slowly We Rot", setlist.getSets().getSets().get(0).getSongs().get(11).getName());
+        assertEquals(1, setlist.getSets().get(0).getSets().size());
+        assertEquals("Redneck Stomp", setlist.getSets().get(0).getSets().get(0).getSongs().get(0).getName());
+        assertEquals("Centuries of Lies", setlist.getSets().get(0).getSets().get(0).getSongs().get(1).getName());
+        assertEquals("Slowly We Rot", setlist.getSets().get(0).getSets().get(0).getSongs().get(11).getName());
     }
 }

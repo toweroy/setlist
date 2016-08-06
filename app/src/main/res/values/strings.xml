@@ -1,3 +1,6 @@
 <resources>
     <string name="app_name">setlist</string>
+
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="attended_fragment_label">Attended fragment</string>
 </resources>

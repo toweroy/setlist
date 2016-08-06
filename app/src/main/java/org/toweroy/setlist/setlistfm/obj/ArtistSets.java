@@ -31,15 +31,17 @@ public class ArtistSets {
                 '}';
     }
 
-    public static class ArtistSetTypeAdapter implements JsonDeserializer<List<ArtistSet>> {
-        public List<ArtistSet> deserialize(JsonElement json, Type typeOfT, JsonDeserializationContext ctx) {
-            List<ArtistSet> vals = new ArrayList<>();
+    public static class ArtistSetsTypeAdapter implements JsonDeserializer<List<ArtistSets>> {
+        public List<ArtistSets> deserialize(JsonElement json, Type typeOfT, JsonDeserializationContext ctx) {
+            List<ArtistSets> vals = new ArrayList<>();
             if (json.isJsonArray()) {
                 for (JsonElement e : json.getAsJsonArray()) {
-                    vals.add((ArtistSet) ctx.deserialize(e, ArtistSet.class));
+                    vals.add((ArtistSets) ctx.deserialize(e, ArtistSets.class));
                 }
             } else if (json.isJsonObject()) {
-                vals.add((ArtistSet) ctx.deserialize(json, ArtistSet.class));
+                vals.add((ArtistSets) ctx.deserialize(json, ArtistSets.class));
+            } else if (json.isJsonPrimitive()) {
+                vals = new ArrayList<>();
             } else {
                 throw new RuntimeException("Unexpected JSON type: " + json.getClass());
             }

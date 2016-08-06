@@ -1,6 +1,6 @@
 package org.toweroy.setlist.setlistfm.obj;
 
-import org.toweroy.setlist.setlistfm.obj.City;
+import com.google.gson.annotations.SerializedName;
 
 /**
  * Venue POJO
@@ -15,7 +15,9 @@ import org.toweroy.setlist.setlistfm.obj.City;
  */
 public class Venue {
 
+    @SerializedName("@id")
     private final String id;
+    @SerializedName("@name")
     private final String name;
     private final City city;
     private final String url;

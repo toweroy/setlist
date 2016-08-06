@@ -1,6 +1,14 @@
 package org.toweroy.setlist.setlistfm.obj;
 
+import com.google.gson.JsonDeserializationContext;
+import com.google.gson.JsonDeserializer;
+import com.google.gson.JsonElement;
 import com.google.gson.annotations.SerializedName;
+
+import java.lang.reflect.Type;
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.List;
 
 /**
  * Setlist POJO
@@ -32,12 +40,12 @@ public class Setlist {
     private final String lastFmEventId;
     private final Artist artist;
     private final Venue venue;
-    private final ArtistSets sets;
+    private final List<ArtistSets> sets;
     private final String info;
     private final String url;
 
     public Setlist(String name, String id, String eventDate, String lastUpdated, String versionId,
-                   String tour, String lastFmEventId, Artist artist, Venue venue, ArtistSets sets, String info, String url) {
+                   String tour, String lastFmEventId, Artist artist, Venue venue, List<ArtistSets> sets, String info, String url) {
         this.name = name;
         this.id = id;
         this.eventDate = eventDate;
@@ -88,7 +96,7 @@ public class Setlist {
         return venue;
     }
 
-    public ArtistSets getSets() {
+    public List<ArtistSets> getSets() {
         return sets;
     }
 
@@ -116,5 +124,23 @@ public class Setlist {
                 ", info='" + info + '\'' +
                 ", url='" + url + '\'' +
                 '}';
+    }
+
+    public static class SetlistTypeAdapter implements JsonDeserializer<List<Setlist>> {
+        public List<Setlist> deserialize(JsonElement json, Type typeOfT, JsonDeserializationContext ctx) {
+            List<Setlist> vals = new ArrayList<>();
+            if (json.isJsonArray()) {
+                for (JsonElement e : json.getAsJsonArray()) {
+                    vals.add((Setlist) ctx.deserialize(e, Setlist.class));
+                }
+            } else if (json.isJsonObject()) {
+                vals.add((Setlist) ctx.deserialize(json, Setlist.class));
+            } else if (json.isJsonPrimitive()) {
+                vals = Collections.emptyList();
+            } else {
+                throw new RuntimeException("Unexpected JSON type: " + json.getClass());
+            }
+            return vals;
+        }
     }
 }
