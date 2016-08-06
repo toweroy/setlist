@@ -1,9 +1,12 @@
 package org.toweroy.setlist.setlistfm.obj;
 
+import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
 import com.google.gson.JsonDeserializationContext;
 import com.google.gson.JsonDeserializer;
 import com.google.gson.JsonElement;
 import com.google.gson.annotations.SerializedName;
+import com.google.gson.reflect.TypeToken;
 
 import java.lang.reflect.Type;
 import java.util.ArrayList;
@@ -142,5 +145,19 @@ public class Setlist {
             }
             return vals;
         }
+    }
+
+    public static Setlist toSetlist(String data) {
+        Type artistSetListType = new TypeToken<List<ArtistSet>>() {}.getType();
+        Type artistSetListsType = new TypeToken<List<ArtistSets>>() {}.getType();
+        Type setlistType = new TypeToken<List<Setlist>>() {}.getType();
+        Type songType = new TypeToken<List<Song>>() {}.getType();
+        Gson gson = new GsonBuilder()
+                .registerTypeAdapter(artistSetListType, new ArtistSet.ArtistSetTypeAdapter())
+                .registerTypeAdapter(artistSetListsType, new ArtistSets.ArtistSetsTypeAdapter())
+                .registerTypeAdapter(setlistType, new Setlist.SetlistTypeAdapter())
+                .registerTypeAdapter(songType, new Song.SongTypeAdapter())
+                .create();
+        return gson.fromJson(data, Setlist.class);
     }
 }

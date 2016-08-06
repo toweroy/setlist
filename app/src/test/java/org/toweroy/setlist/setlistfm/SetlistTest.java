@@ -97,11 +97,7 @@ public class SetlistTest {
 
     @Test
     public void getSetlistFromJson() {
-        Type artistSetListType = new TypeToken<List<ArtistSet>>() {}.getType();
-        Gson gson = new GsonBuilder()
-                .registerTypeAdapter(artistSetListType, new ArtistSet.ArtistSetTypeAdapter())
-                .create();
-        Setlist setlist = gson.fromJson(SETLIST_JSON, Setlist.class);
+        Setlist setlist = Setlist.toSetlist(SETLIST_JSON);
         assertEquals("53ff2bcd", setlist.getId());
         assertEquals("2016-07-22T13:08:27.000+0000", setlist.getLastUpdated());
         assertEquals(1, setlist.getSets().get(0).getSets().size());

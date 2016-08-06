@@ -7,7 +7,6 @@ import android.widget.Toast;
 
 import org.toweroy.setlist.setlistfm.obj.Attended;
 import org.toweroy.setlist.setlistfm.obj.Setlist;
-import org.toweroy.setlist.setlistfm.obj.SetlistItemAdapter;
 import org.toweroy.setlist.setlistfm.obj.Setlists;
 import org.toweroy.setlist.setlistfm.req.SetlistFmRequest;
 

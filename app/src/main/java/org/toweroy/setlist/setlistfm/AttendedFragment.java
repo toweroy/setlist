@@ -13,7 +13,6 @@ import android.view.ViewGroup;
 
 import org.toweroy.setlist.R;
 import org.toweroy.setlist.setlistfm.obj.Setlist;
-import org.toweroy.setlist.setlistfm.obj.SetlistItemAdapter;
 
 import java.util.ArrayList;
 import java.util.List;

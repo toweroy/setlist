@@ -1522,6 +1522,6 @@ public class AttendedTest {
     public void getAttendedFromJson() {
         Attended attended = Attended.toAttended(ATTENDED_JSON);
         assertEquals(1, attended.getSetlists().size());
-        assertEquals(10, attended.getSetlists().get(0).getItemsPerPage());
+        assertEquals(20, attended.getSetlists().get(0).getItemsPerPage());
     }
 }
