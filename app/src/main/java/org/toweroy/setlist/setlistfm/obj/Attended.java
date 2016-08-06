@@ -89,11 +89,13 @@ public class Attended {
         Type artistSetListsType = new TypeToken<List<ArtistSets>>() {}.getType();
         Type setlistType = new TypeToken<List<Setlist>>() {}.getType();
         Type setlistsType = new TypeToken<List<Setlists>>() {}.getType();
+        Type songType = new TypeToken<List<Song>>() {}.getType();
         Gson gson = new GsonBuilder()
                 .registerTypeAdapter(artistSetListType, new ArtistSet.ArtistSetTypeAdapter())
                 .registerTypeAdapter(artistSetListsType, new ArtistSets.ArtistSetsTypeAdapter())
                 .registerTypeAdapter(setlistType, new Setlist.SetlistTypeAdapter())
                 .registerTypeAdapter(setlistsType, new Setlists.SetlistsTypeAdapter())
+                .registerTypeAdapter(songType, new Song.SongTypeAdapter())
                 .create();
         return gson.fromJson(data, Attended.class);
     }

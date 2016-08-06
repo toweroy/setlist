@@ -21,9 +21,7 @@ public class MainActivity extends AppCompatActivity implements AttendedFragment.
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-//        setContentView(R.layout.activity_main);
         setContentView(R.layout.activity_main);
-
         FragmentManager fragmentManager = getSupportFragmentManager();
         FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
         AttendedFragment attendedFragment = new AttendedFragment();

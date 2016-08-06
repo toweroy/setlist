@@ -31,6 +31,7 @@ public class AttendedFragment extends Fragment {
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
     private static final String ARG_PARAM1 = "param1";
     private static final String ARG_PARAM2 = "param2";
+    private static final String USERNAME = "toweroy";
 
     // TODO: Rename and change types of parameters
     private String mParam1;
@@ -95,7 +96,7 @@ public class AttendedFragment extends Fragment {
         mRecyclerView.setAdapter(mSetlistsAdapter);
         mRecyclerView.setItemAnimator(new DefaultItemAnimator());
         // Start loading setlists
-        new GetAttendedTask(getContext(), mSetlists, mSetlistsAdapter).execute();
+        new GetAttendedTask(getContext(), USERNAME, mSetlists, mSetlistsAdapter).execute();
         return rootView;
     }
 

@@ -25,14 +25,17 @@ public class GetAttendedTask extends AsyncTask<Void, String, Void> {
     private static final String ATTENDED_JSON = "/attended.json";
     private static final String BASE_URL = "http://api.setlist.fm/rest/0.1/";
     private static final String USER_PATH = "user/";
+    private static final String PAGE_QUERY = "p";
     private static final String TAG = GetAttendedTask.class.getSimpleName();
 
     private Context mContext;
+    private final String mUsername;
     private List<Setlist> mSetlists;
     private SetlistItemAdapter mSetlistItemAdapter;
 
-    GetAttendedTask(Context context, List<Setlist> setlists, SetlistItemAdapter setlistsAdapter) {
+    GetAttendedTask(Context context, String username, List<Setlist> setlists, SetlistItemAdapter setlistsAdapter) {
         this.mContext = context;
+        this.mUsername = username;
         this.mSetlists = setlists;
         this.mSetlistItemAdapter = setlistsAdapter;
     }
@@ -73,10 +76,9 @@ public class GetAttendedTask extends AsyncTask<Void, String, Void> {
 
     private Attended getAttendedPage(int page) {
         Log.d(TAG, "Getting attended page [" + page + "]");
-        final String username = "toweroy";
-        String attendedUrl = BASE_URL + USER_PATH + username + ATTENDED_JSON;
+        String attendedUrl = BASE_URL + USER_PATH + mUsername + ATTENDED_JSON;
         HttpUrl.Builder urlBuilder = HttpUrl.parse(attendedUrl).newBuilder();
-        urlBuilder.addQueryParameter("page", String.valueOf(page));
+        urlBuilder.addQueryParameter(PAGE_QUERY, String.valueOf(page));
         OkHttpClient client = new OkHttpClient();
         String url = urlBuilder.build().toString();
         String response = null;

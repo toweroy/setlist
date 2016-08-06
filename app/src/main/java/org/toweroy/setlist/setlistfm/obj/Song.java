@@ -1,8 +1,13 @@
 package org.toweroy.setlist.setlistfm.obj;
 
+import com.google.gson.JsonDeserializationContext;
+import com.google.gson.JsonDeserializer;
+import com.google.gson.JsonElement;
 import com.google.gson.annotations.SerializedName;
 
-import org.toweroy.setlist.setlistfm.obj.Artist;
+import java.lang.reflect.Type;
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * Song POJO
@@ -71,5 +76,23 @@ public class Song {
                 ", cover=" + cover +
                 ", info='" + info + '\'' +
                 '}';
+    }
+
+    public static class SongTypeAdapter implements JsonDeserializer<List<Song>> {
+        public List<Song> deserialize(JsonElement json, Type typeOfT, JsonDeserializationContext ctx) {
+            List<Song> vals = new ArrayList<>();
+            if (json.isJsonArray()) {
+                for (JsonElement e : json.getAsJsonArray()) {
+                    vals.add((Song) ctx.deserialize(e, Song.class));
+                }
+            } else if (json.isJsonObject()) {
+                vals.add((Song) ctx.deserialize(json, Song.class));
+            } else if (json.isJsonPrimitive()) {
+                vals = new ArrayList<>();
+            } else {
+                throw new RuntimeException("Unexpected JSON type: " + json.getClass());
+            }
+            return vals;
+        }
     }
 }
