@@ -7,11 +7,14 @@ import android.support.v4.app.Fragment;
 import android.support.v7.widget.DefaultItemAnimator;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
 import org.toweroy.setlist.R;
+import org.toweroy.setlist.db.ArtistDbHelper;
+import org.toweroy.setlist.setlistfm.obj.Artist;
 import org.toweroy.setlist.setlistfm.obj.Setlist;
 
 import java.util.ArrayList;
@@ -26,6 +29,8 @@ import java.util.List;
  * create an instance of this fragment.
  */
 public class AttendedFragment extends Fragment {
+
+    private final String TAG = this.getTag();
     // TODO: Rename parameter arguments, choose names that match
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
     private static final String ARG_PARAM1 = "param1";
@@ -38,6 +43,7 @@ public class AttendedFragment extends Fragment {
     protected RecyclerView mRecyclerView;
     protected SetlistItemAdapter mSetlistsAdapter;
     protected RecyclerView.LayoutManager mLayoutManager;
+    protected ArtistDbHelper mArtistDbHelper;
     protected List<Setlist> mSetlists = new ArrayList<>();
     private OnFragmentInteractionListener mListener;
 
@@ -70,6 +76,13 @@ public class AttendedFragment extends Fragment {
             mParam1 = getArguments().getString(ARG_PARAM1);
             mParam2 = getArguments().getString(ARG_PARAM2);
         }
+        loadArtistDb();
+    }
+
+    private void loadArtistDb() {
+        mArtistDbHelper = new ArtistDbHelper(getContext());
+        List<Artist> dbArtists = ArtistDbHelper.read(mArtistDbHelper, null, null);
+        Log.d(TAG, "Found " + dbArtists.size() + " artist(s)");
     }
 
     @Override
@@ -95,7 +108,7 @@ public class AttendedFragment extends Fragment {
         mRecyclerView.setAdapter(mSetlistsAdapter);
         mRecyclerView.setItemAnimator(new DefaultItemAnimator());
         // Start loading setlists
-        new GetAttendedTask(getContext(), USERNAME, mSetlists, mSetlistsAdapter).execute();
+        new GetAttendedTask(getContext(), USERNAME, mSetlists, mSetlistsAdapter, mArtistDbHelper).execute();
         return rootView;
     }
 

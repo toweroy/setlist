@@ -5,6 +5,8 @@ import android.os.AsyncTask;
 import android.util.Log;
 import android.widget.Toast;
 
+import org.toweroy.setlist.db.ArtistDbHelper;
+import org.toweroy.setlist.setlistfm.obj.Artist;
 import org.toweroy.setlist.setlistfm.obj.Attended;
 import org.toweroy.setlist.setlistfm.obj.Setlist;
 import org.toweroy.setlist.setlistfm.obj.Setlists;
@@ -31,12 +33,15 @@ public class GetAttendedTask extends AsyncTask<Void, String, Void> {
     private final String mUsername;
     private List<Setlist> mSetlists;
     private SetlistItemAdapter mSetlistItemAdapter;
+    private ArtistDbHelper mArtistDbHelper;
 
-    GetAttendedTask(Context context, String username, List<Setlist> setlists, SetlistItemAdapter setlistsAdapter) {
+    GetAttendedTask(Context context, String username, List<Setlist> setlists,
+                    SetlistItemAdapter setlistsAdapter, ArtistDbHelper artistDbHelper) {
         this.mContext = context;
         this.mUsername = username;
         this.mSetlists = setlists;
         this.mSetlistItemAdapter = setlistsAdapter;
+        this.mArtistDbHelper = artistDbHelper;
     }
 
     @Override
@@ -51,12 +56,17 @@ public class GetAttendedTask extends AsyncTask<Void, String, Void> {
             for (Setlists setlists : attendedObject.getSetlists()) {
                 for (Setlist setlist : setlists.getSetlists()) {
                     mSetlists.add(setlist);
+                    saveSetlist(setlist);
                 }
             }
         }
 
         Log.d(TAG, "Finished getting setlists");
         return (null);
+    }
+
+    private void saveSetlist(Setlist setlist) {
+        long artistId = ArtistDbHelper.insert(mArtistDbHelper, setlist.getArtist());
     }
 
     @Override

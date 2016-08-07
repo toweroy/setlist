@@ -21,6 +21,7 @@ import java.util.List;
  * Created by richardtolman on 7/31/16.
  */
 public class Artist {
+    private long artistId = -1;
     @SerializedName("@disambiguation")
     private final String disambiguation;
     @SerializedName("@mbid")
@@ -36,6 +37,13 @@ public class Artist {
 //    @SerializedName("@url")
     private final String url;
 
+    public Artist(long artistId, String disambiguation, String mbid, String tmid, String name, String sortName,
+                  String info, String url) {
+        this(disambiguation, mbid, tmid, name, sortName, info, url);
+        this.artistId = artistId;
+
+    }
+
     public Artist(String disambiguation, String mbid, String tmid, String name, String sortName,
                   String info, String url) {
         this.disambiguation = disambiguation;
@@ -45,6 +53,14 @@ public class Artist {
         this.sortName = sortName;
         this.info = info;
         this.url = url;
+    }
+
+    public long getId() {
+        return artistId;
+    }
+
+    public void setId(long artistId) {
+        this.artistId = artistId;
     }
 
     public String getDisambiguation() {
@@ -78,7 +94,8 @@ public class Artist {
     @Override
     public String toString() {
         return "Artist {" +
-                "disambiguation='" + disambiguation + '\'' +
+                "artistId='" + artistId + '\'' +
+                ", disambiguation='" + disambiguation + '\'' +
                 ", mbid='" + mbid + '\'' +
                 ", tmid='" + tmid + '\'' +
                 ", name='" + name + '\'' +
